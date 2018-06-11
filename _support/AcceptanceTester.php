@@ -1,5 +1,8 @@
 <?php
 
+use Page\MainPage;
+use Page\StorePage;
+
 
 /**
  * Inherited Methods
@@ -17,57 +20,61 @@
  * @SuppressWarnings(PHPMD)
 */
 class AcceptanceTester extends \Codeception\Actor
+
+// <editor-fold defaultstate="collapsed" desc="product category choosing">
 {
     use _generated\AcceptanceTesterActions;
-
     /**
-     * @Given Have to open google page with :numl
+     * @Given I have to open google page with :numl
      */
+
     public function iHaveToOpenGooglePage($num1)
     {
-        $this->amOnPage("$num1");
-        $this->seeElement( '//div[@id = \'lga\']/img[@alt=\'Google\']');
+
+        $this->amOnPage($num1);
+        $this->seeElement(MainPage::$mainPageLogoField);
     }
 
     /**
-     * @Given Have to enter the name of the resource with :numl
+     * @Given I have to enter the name of the resource with :numl
      */
     public function iHaveToEnterTheNameOfTheResource($num1)
     {
-        $this->fillField("//input[@type='text']", "$num1");
+        $this->fillField(MainPage::$searchField, "$num1");
     }
     /**
-     * @Given Have to submit
+     * @Given I have to submit
      */
     public function iHaveToSubmit()
     {
-        $this->pressKey("//input[@type='text']",\Facebook\WebDriver\WebDriverKeys::ENTER);
+        $this->pressKey(MainPage::$searchField,\Facebook\WebDriver\WebDriverKeys::ENTER);
     }
 
     /**
-     * @When Go to opened page
+     * @When I go to opened page
      */
     public function iGoToOpenedPage()
     {
-        $this->waitForText('Юла - доска объявлений, бесплатные частные объявления');
-        $this->click('.//h3/*[contains(.,\'Юла - доска объявлений, бесплатные частные объявления\')]');
+        $this->waitForText(MainPage::$verifiedText);
+        $this->click(MainPage::$linkPathField);
         $this->switchToNextTab();
     }
 
     /**
-     * @Then Should check that correct page is opened
+     * @Then I should check that correct page is opened
      */
     public function iShouldCheckThatCorrectPageIsOpened()
     {
-        $this->seeElement('.//div[contains(@class, \'header_bar__logo\')]/a[contains(@href,\'https://youla.ru/\')]/span[contains(@aria-label,\'Юла\')]');
+        $this->seeElement(StorePage::$checkElementOfThePageField);
     }
 
     /**
-     * @Then Have to check category of product
+     * @Then I have to check category of product
      */
     public function iHaveToCheckCategoryOfProduct()
     {
-        $this->click('.//div[contains(@class, \'categories__wrapper\')]//a[contains(.,\'Женский гардероб\')]');
+        $this->click(StorePage::$productCategoryField);
+        $this->see("Женский гардероб", StorePage::$productCategoryField);
     }
-
+// </editor-fold>
 }

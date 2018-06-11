@@ -1,5 +1,5 @@
 <?php
-
+use Page\MainPage;
 
 class FirstCest
 {

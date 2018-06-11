@@ -10,4 +10,4 @@ modules:
         - WebDriver:
             url: 'https://www.google.ru'
             browser: chrome
-        - \Helper\Acceptance     
+        - \Helper\Acceptance
